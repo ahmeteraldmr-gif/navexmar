@@ -3,7 +3,16 @@
 // ==========================================
 
 // Base URL for API calls
-const BASE_URL = window.location.origin;
+// Base URL for API calls - Automatically detect from current URL
+const getBaseUrl = () => {
+    const path = window.location.pathname;
+    if (path.includes('/public/admin')) {
+        return window.location.origin + path.split('/admin')[0];
+    }
+    return window.location.origin;
+};
+
+const BASE_URL = typeof window.PHP_BASE_URL !== 'undefined' ? window.PHP_BASE_URL : getBaseUrl();
 
 // ==========================================
 // UTILITY FUNCTIONS
@@ -39,19 +48,24 @@ let currentServiceId = null;
 
 // Initialize Services Page
 if (document.getElementById('serviceModal')) {
+    console.log('Service modal found, initializing...');
     serviceModal = document.getElementById('serviceModal');
     serviceForm = document.getElementById('serviceForm');
     modalTitle = document.getElementById('modalTitle');
     
     // Add Service Button
     document.getElementById('addServiceBtn')?.addEventListener('click', () => {
+        console.log('Add service button clicked');
         openServiceModal();
     });
     
     // Edit Service Buttons
-    document.querySelectorAll('.edit-service').forEach(btn => {
+    const editButtons = document.querySelectorAll('.edit-service');
+    console.log('Edit buttons found:', editButtons.length);
+    editButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             const serviceId = this.dataset.id;
+            console.log('Edit button clicked, service ID:', serviceId);
             loadServiceForEdit(serviceId);
         });
     });
@@ -130,27 +144,42 @@ function closeServiceModal() {
 
 // Load service for editing
 async function loadServiceForEdit(serviceId) {
-    // Get service from page (already loaded)
-    const serviceCard = document.querySelector(`[data-id="${serviceId}"]`);
-    if (!serviceCard) return;
+    console.log('Loading service for edit:', serviceId);
     
     // We need to fetch full service data via API
     try {
-        const response = await fetch(`${BASE_URL}/admin/services/get/${serviceId}`);
-        const data = await response.json();
+        const url = `${BASE_URL}/admin/services/get/${serviceId}`;
+        console.log('Fetching from:', url);
+        const response = await fetch(url);
+        console.log('Response status:', response.status, response.ok);
         
-        if (data.success) {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Data received:', data);
+        
+        if (data.success && data.data) {
+            console.log('Opening modal with API data');
             openServiceModal(data.data);
+        } else {
+            throw new Error('Invalid API response');
         }
     } catch (error) {
-        console.error('Error loading service:', error);
-        // Fallback: parse from card data
+        console.error('Error loading service, using fallback:', error);
+        
+        // Fallback: Sayfayı yeniden yükle ve düzenlemeyi farklı şekilde yap
+        alert('Hizmet bilgileri yüklenemedi. Lütfen sayfayı yenileyin veya yöneticinize başvurun.\n\nHata: ' + error.message);
+        
+        // Alternatif: Yine de modalı aç ama boş
         openServiceModal({
             id: serviceId,
-            name: serviceCard.querySelector('h3').textContent,
-            name_en: serviceCard.querySelector('.service-name-en').textContent,
+            name: '',
+            name_en: '',
             description: '',
             description_en: '',
+            icon: '',
             features: [],
             features_en: []
         });

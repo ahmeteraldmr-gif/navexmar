@@ -23,29 +23,28 @@ define('VIEWS_PATH', SRC_PATH . '/Views');
 define('UPLOADS_PATH', PUBLIC_PATH . '/uploads');
 
 // URL ayarları
-if (APP_ENV === 'local') {
-    define('BASE_URL', 'http://localhost/navexmar/public');
-    define('ASSETS_URL', BASE_URL . '/assets');
-    define('UPLOADS_URL', BASE_URL . '/uploads');
-} else {
-    // Production için
-    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'] ?? 'navexmar.com';
+function getBaseUrl() {
+    $appUrl = env('APP_URL', 'http://localhost:8000');
     
-    // Eğer URL'de /public/ varsa (Document Root ayarlanmamışsa)
-    $requestUri = $_SERVER['REQUEST_URI'] ?? '';
-    if (strpos($requestUri, '/public/') !== false || strpos($_SERVER['SCRIPT_NAME'] ?? '', '/public/') !== false) {
-        // /public/ ile erişiliyorsa
-        define('BASE_URL', $protocol . '://' . $host . '/public');
-        define('ASSETS_URL', $protocol . '://' . $host . '/public/assets');
-        define('UPLOADS_URL', $protocol . '://' . $host . '/public/uploads');
-    } else {
-        // Document Root /public/ klasörüne işaret ediyorsa (ideal durum)
-        define('BASE_URL', $protocol . '://' . $host);
-        define('ASSETS_URL', BASE_URL . '/assets');
-        define('UPLOADS_URL', BASE_URL . '/uploads');
+    // Eğer localhost ise veya HTTP_HOST varsa, mevcut URL'yi kullan
+    if (isset($_SERVER['HTTP_HOST'])) {
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'];
+        
+        // SCRIPT_NAME üzerinden alt dizin kontrolü
+        $scriptName = $_SERVER['SCRIPT_NAME'];
+        $baseDir = str_replace('/index.php', '', $scriptName);
+        
+        return $protocol . '://' . $host . $baseDir;
     }
+    
+    return rtrim($appUrl, '/');
 }
+
+define('BASE_URL', getBaseUrl());
+define('ASSETS_URL', BASE_URL . '/assets');
+define('UPLOADS_URL', BASE_URL . '/uploads');
+
 
 // Dil ayarları
 define('DEFAULT_LANG', 'tr');

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Test</title>
+</head>
+<body>
+    <h1>JavaScript Test Sayfası</h1>
+    <button id="testBtn" class="edit-service" data-id="1">Test Butonu</button>
+    <div id="result"></div>
+
+    <script>
+        console.log('Test page loaded');
+        console.log('Edit buttons:', document.querySelectorAll('.edit-service').length);
+        
+        document.getElementById('testBtn').addEventListener('click', function() {
+            console.log('Button clicked!');
+            document.getElementById('result').innerHTML = 'Buton çalışıyor! ✓';
+        });
+    </script>
+
+    <h2>Admin.js Test</h2>
+    <script src="assets/js/admin.js"></script>
+    <div id="serviceModal">Modal var</div>
+</body>
+</html>

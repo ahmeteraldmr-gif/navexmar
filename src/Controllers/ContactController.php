@@ -57,7 +57,8 @@ class ContactController extends BaseController {
         // CSRF token kontrolü
         $token = $this->post('csrf_token');
         if (!validateCSRFToken($token)) {
-            $this->setFlash('error', 'Geçersiz istek. Lütfen tekrar deneyin.');
+            $msg = ($this->lang === 'en') ? 'Invalid request. Please try again.' : 'Geçersiz istek. Lütfen tekrar deneyin.';
+            $this->setFlash('error', $msg);
             $this->redirect(url('/iletisim'));
             return;
         }
@@ -80,7 +81,8 @@ class ContactController extends BaseController {
         ]);
         
         if ($validation !== true) {
-            $this->setFlash('error', 'Lütfen tüm gerekli alanları doğru şekilde doldurun.');
+            $msg = ($this->lang === 'en') ? 'Please fill in all required fields correctly.' : 'Lütfen tüm gerekli alanları doğru şekilde doldurun.';
+            $this->setFlash('error', $msg);
             $_SESSION['form_errors'] = $validation;
             $_SESSION['form_data'] = $data;
             $this->redirect(url('/iletisim'));
@@ -92,17 +94,20 @@ class ContactController extends BaseController {
         
         if ($messageId) {
             // Başarılı
-            $this->setFlash('success', 'Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.');
+            $successMsg = ($this->lang === 'en') 
+                ? 'Your message has been sent successfully. We will get back to you soon.' 
+                : 'Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.';
+            $this->setFlash('success', $successMsg);
             
             // Form verilerini temizle
             unset($_SESSION['form_data']);
             unset($_SESSION['form_errors']);
-            
-            // TODO: E-posta bildirimi gönder (opsiyonel)
-            // $this->sendEmailNotification($data);
         } else {
             // Hata
-            $this->setFlash('error', 'Mesajınız gönderilemedi. Lütfen tekrar deneyin.');
+            $errorMsg = ($this->lang === 'en') 
+                ? 'Your message could not be sent. Please try again.' 
+                : 'Mesajınız gönderilemedi. Lütfen tekrar deneyin.';
+            $this->setFlash('error', $errorMsg);
             $_SESSION['form_data'] = $data;
         }
         

@@ -44,6 +44,7 @@ return [
     
     // Admin - Hizmetler
     '/admin/services' => ['controller' => 'AdminController', 'action' => 'services', 'auth' => true],
+    '/admin/services/get/{id}' => ['controller' => 'AdminController', 'action' => 'serviceGet', 'auth' => true],
     '/admin/services/create' => ['controller' => 'AdminController', 'action' => 'serviceCreate', 'auth' => true, 'method' => 'POST'],
     '/admin/services/update' => ['controller' => 'AdminController', 'action' => 'serviceUpdate', 'auth' => true, 'method' => 'POST'],
     '/admin/services/delete/{id}' => ['controller' => 'AdminController', 'action' => 'serviceDelete', 'auth' => true, 'method' => 'POST'],
@@ -58,6 +59,7 @@ return [
     '/admin/pages' => ['controller' => 'AdminController', 'action' => 'pages', 'auth' => true],
     '/admin/pages/edit/{key}' => ['controller' => 'AdminController', 'action' => 'pageEdit', 'auth' => true],
     '/admin/pages/update' => ['controller' => 'AdminController', 'action' => 'pageUpdate', 'auth' => true, 'method' => 'POST'],
+    '/admin/pages/update-sections' => ['controller' => 'AdminController', 'action' => 'pageSectionsUpdate', 'auth' => true, 'method' => 'POST'],
     
     // Admin - Header Görselleri
     '/admin/headers' => ['controller' => 'AdminController', 'action' => 'headers', 'auth' => true],

@@ -4,7 +4,7 @@
 $headerStyle = '';
 if (isset($headerImage) && !empty($headerImage['image_path'])) {
     $headerImageUrl = upload($headerImage['image_path']);
-    $headerStyle = "background-image: url('$headerImageUrl');";
+    $headerStyle = "background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('$headerImageUrl') !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;";
 }
 
 // Overlay ayarları (eğer varsa)

@@ -29,12 +29,26 @@ dropdowns.forEach(dropdown => {
     const link = dropdown.querySelector('a');
     if (link) {
         link.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768) {
+            if (window.innerWidth <= 1024) { // Mobil ve tablet için tıklama ile açılma
                 e.preventDefault();
+                e.stopPropagation();
+                
+                // Diğer açık dropdownları kapat
+                dropdowns.forEach(d => {
+                    if (d !== dropdown) d.classList.remove('active');
+                });
+                
                 dropdown.classList.toggle('active');
             }
         });
     }
+});
+
+// Dropdown dışına tıklanınca kapat
+document.addEventListener('click', () => {
+    dropdowns.forEach(dropdown => {
+        dropdown.classList.remove('active');
+    });
 });
 
 // ==========================================
@@ -53,7 +67,12 @@ const animateCounters = () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const counter = entry.target;
-                const target = parseInt(counter.getAttribute('data-target'));
+                const targetAttr = counter.getAttribute('data-target');
+                if (!targetAttr || isNaN(parseInt(targetAttr))) {
+                    counter.textContent = '0';
+                    return;
+                }
+                const target = parseInt(targetAttr);
                 const duration = 2000; // 2 saniye
                 const increment = target / (duration / 16); // 60 FPS
                 let current = 0;
@@ -170,18 +189,19 @@ createScrollTopButton();
 
 // ==========================================
 // NAVBAR SCROLL EFFECT
-// Kullanım: Sayfa aşağı kaydırıldığında navbar'a gölge efekti ekler
 // ==========================================
-const navbar = document.querySelector('.navbar');
-if (navbar) {
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
-        } else {
-            navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-        }
-    });
-}
+const handleNavbarScroll = () => {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+    
+    if (window.scrollY > 50) {
+        navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+    } else {
+        navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+    }
+};
+
+window.addEventListener('scroll', handleNavbarScroll);
 
 // ==========================================
 // NEWSLETTER FORM HANDLER

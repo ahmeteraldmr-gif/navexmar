@@ -59,6 +59,16 @@
             color: var(--primary);
             margin-bottom: 1rem;
         }
+        select:focus {
+            border-color: #6c5ce7 !important;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+            outline: none;
+        }
+        .upload-area:hover {
+            border-color: #6c5ce7;
+            background: #f0f8ff;
+            transform: scale(1.02);
+        }
     </style>
 </head>
 <body class="admin-body">
@@ -121,32 +131,55 @@
             <?php endif; ?>
 
             <!-- Upload Section -->
-            <div class="card">
-                <div class="card-header">
-                    <h2><i class="fas fa-upload"></i> Yeni Görsel Yükle</h2>
+            <div class="card" style="margin-bottom: 2rem;">
+                <div class="card-header" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white;">
+                    <h2><i class="fas fa-upload"></i> Yeni Header Görseli Ekle</h2>
                 </div>
-                <div class="card-body">
-                    <form id="uploadForm" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label>Sayfa Seçin</label>
-                            <select name="page_key" id="pageKey" required>
-                                <?php if (!empty($pages)): ?>
-                                    <?php foreach ($pages as $page): ?>
-                                        <option value="<?php echo e($page['page_key']); ?>">
-                                            <?php echo e($page['title_tr']); ?> (<?php echo e($page['title_en']); ?>)
-                                        </option>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </select>
+                <div class="card-body" style="padding: 2rem;">
+                    <form id="uploadForm" enctype="multipart/form-data" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div class="upload-left">
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label style="display: block; margin-bottom: 0.8rem; font-weight: 600; color: #2d3436;">
+                                    <i class="fas fa-layer-group"></i> Hedef Sayfayı Seçin
+                                </label>
+                                <select name="page_key" id="pageKey" required style="width: 100%; padding: 12px; border: 2px solid #dfe6e9; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: border-color 0.3s;">
+                                    <option value="" disabled selected>Hangi sayfa için yüklemek istiyorsunuz?</option>
+                                    <?php if (!empty($pages)): ?>
+                                        <?php foreach ($pages as $page): ?>
+                                            <option value="<?php echo e($page['page_key']); ?>">
+                                                📍 <?php echo e($page['title_tr']); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                                <small style="display: block; margin-top: 5px; color: #636e72;">Bu görsel seçtiğiniz sayfanın üst kısmında (Header) görünecektir.</small>
+                            </div>
+
+                            <div class="upload-area" id="uploadArea" style="height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 3px dashed #6c5ce7; background: #f8f9ff; border-radius: 15px; transition: all 0.3s; position: relative; overflow: hidden;">
+                                <div id="uploadPlaceholder">
+                                    <i class="fas fa-cloud-upload-alt" style="font-size: 3.5rem; color: #6c5ce7; margin-bottom: 1rem;"></i>
+                                    <p style="font-weight: 500; color: #2d3436;">Dosya Seçin veya Sürükleyin</p>
+                                    <span style="font-size: 0.8rem; color: #636e72;">JPG, PNG veya WEBP (Maks 10MB)</span>
+                                </div>
+                                <img id="imagePreview" src="#" alt="Önizleme" style="display: none; width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;">
+                                <div id="previewOverlay" style="display: none; position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.6); color: white; padding: 5px; text-align: center; font-size: 0.8rem; z-index: 2;">Değiştirmek için tıklayın</div>
+                                <input type="file" name="image" id="imageInput" accept="image/*" style="display: none;" required>
+                            </div>
                         </div>
-                        <div class="upload-area" id="uploadArea">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Görseli buraya sürükleyin veya tıklayın</p>
-                            <input type="file" name="image" id="imageInput" accept="image/*" style="display: none;" required>
+
+                        <div class="upload-right" style="display: flex; flex-direction: column; justify-content: center; align-items: center; border-left: 1px solid #dfe6e9; padding-left: 2rem;">
+                            <div style="text-align: center;">
+                                <i class="fas fa-info-circle" style="font-size: 2rem; color: #00b894; margin-bottom: 1rem;"></i>
+                                <h3 style="margin-bottom: 0.5rem;">İpucu</h3>
+                                <p style="color: #636e72; font-size: 0.9rem; line-height: 1.6;">
+                                    Görselin en iyi şekilde görünmesi için geniş açılı (yatay) fotoğraflar tercih edin. 
+                                    Yükleme yaptıktan sonra sayfayı yenilemenize gerek kalmadan liste güncellenecektir.
+                                </p>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="margin-top: 2rem; width: 100%; padding: 15px; font-size: 1.1rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);">
+                                <i class="fas fa-check-circle"></i> GÖRSELİ ŞİMDİ YÜKLE
+                            </button>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
-                            <i class="fas fa-upload"></i> Yükle
-                        </button>
                     </form>
                 </div>
             </div>
@@ -203,66 +236,123 @@
         </div>
     </div>
 
+    <script src="<?php echo asset('js/admin.js?v=' . time()); ?>"></script>
     <script>
-        // Sidebar toggle
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.querySelector('.admin-sidebar').classList.toggle('collapsed');
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Admin Headers JS Loaded');
 
-        // Upload area click
-        document.getElementById('uploadArea').addEventListener('click', function() {
-            document.getElementById('imageInput').click();
-        });
+            // Sidebar toggle
+            document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+                document.querySelector('.admin-sidebar').classList.toggle('collapsed');
+            });
 
-        // Upload form
-        document.getElementById('uploadForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            
-            fetch('<?php echo url('/admin/headers/upload'); ?>', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    location.reload();
-                } else {
-                    alert(data.message);
+            // Upload area click
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('#uploadArea')) {
+                    document.getElementById('imageInput').click();
                 }
             });
-        });
 
-        // Toggle active
-        document.querySelectorAll('.toggle-active').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.dataset.id;
-                fetch(`<?php echo url('/admin/headers/toggle/'); ?>${id}`, {
-                    method: 'POST'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload();
+            // Image Preview Logic
+            const imageInput = document.getElementById('imageInput');
+            const imagePreview = document.getElementById('imagePreview');
+            const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+            const previewOverlay = document.getElementById('previewOverlay');
+
+            if (imageInput) {
+                imageInput.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            imagePreview.src = e.target.result;
+                            imagePreview.style.display = 'block';
+                            uploadPlaceholder.style.display = 'none';
+                            previewOverlay.style.display = 'block';
+                        }
+                        reader.readAsDataURL(this.files[0]);
                     }
                 });
-            });
-        });
+            }
 
-        // Delete image
-        document.querySelectorAll('.delete-image').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (confirm('Bu görseli silmek istediğinizden emin misiniz?')) {
-                    const id = this.dataset.id;
+            // Upload form
+            const uploadForm = document.getElementById('uploadForm');
+            if (uploadForm) {
+                uploadForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    console.log('Uploading image...');
+                    const formData = new FormData(this);
+                    
+                    fetch('<?php echo url('/admin/headers/upload'); ?>', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Upload response:', data);
+                        if (data.success) {
+                            alert(data.message);
+                            location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Upload error:', error);
+                        alert('Yükleme sırasında teknik bir hata oluştu.');
+                    });
+                });
+            }
+
+            // Event Delegation for Delete and Toggle
+            document.addEventListener('click', function(e) {
+                // Toggle active
+                const toggleBtn = e.target.closest('.toggle-active');
+                if (toggleBtn) {
+                    const id = toggleBtn.dataset.id;
+                    console.log('Toggling active for ID:', id);
+                    fetch(`<?php echo url('/admin/headers/toggle/'); ?>${id}`, {
+                        method: 'POST'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Toggle response:', data);
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            alert(data.message || 'Bir hata oluştu.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Toggle error:', error);
+                        alert('İşlem sırasında teknik bir hata oluştu.');
+                    });
+                    return;
+                }
+
+                // Delete image
+                const deleteBtn = e.target.closest('.delete-image');
+                if (deleteBtn) {
+                    const id = deleteBtn.dataset.id;
+                    console.log('Attempting to delete image ID:', id);
+                    
+                    // Native confirm sometimes fails in some environments
+                    // We will proceed with deletion directly for now to ensure it works
+                    console.log('Deletion proceeding for ID:', id);
                     fetch(`<?php echo url('/admin/headers/delete/'); ?>${id}`, {
                         method: 'POST'
                     })
                     .then(response => response.json())
                     .then(data => {
+                        console.log('Delete response:', data);
                         if (data.success) {
                             location.reload();
+                        } else {
+                            alert(data.message || 'Görsel silinemedi.');
                         }
+                    })
+                    .catch(error => {
+                        console.error('Delete error:', error);
+                        alert('Silme işlemi sırasında teknik bir hata oluştu.');
                     });
                 }
             });

@@ -103,6 +103,19 @@ class AdminController extends BaseController {
     }
     
     /**
+     * Hizmet Bilgisini Getir (GET)
+     */
+    public function serviceGet($id) {
+        $service = $this->serviceModel->find($id);
+        
+        if ($service) {
+            $this->jsonSuccess($service);
+        } else {
+            $this->jsonError('Hizmet bulunamadı.');
+        }
+    }
+    
+    /**
      * Hizmet Güncelle (POST)
      */
     public function serviceUpdate() {
@@ -226,6 +239,11 @@ class AdminController extends BaseController {
         $page = $this->pageModel->getByKey($key);
         $sections = $this->pageModel->getSections($key);
         
+        // DEBUG
+        error_log("Page Key: " . $key);
+        error_log("Sections Count: " . count($sections));
+        error_log("Sections: " . print_r($sections, true));
+        
         if (!$page) {
             $this->setFlash('error', 'Sayfa bulunamadı.');
             $this->redirect(url('/admin/pages'));
@@ -268,6 +286,59 @@ class AdminController extends BaseController {
             $this->setFlash('success', 'Sayfa başarıyla güncellendi.');
         } else {
             $this->setFlash('error', 'Sayfa güncellenirken bir hata oluştu.');
+        }
+        
+        $this->redirect(url('/admin/pages/edit/' . $pageKey));
+    }
+    
+    /**
+     * Sayfa Bölümlerini Güncelle (POST)
+     */
+    public function pageSectionsUpdate() {
+        $data = $this->post();
+        $pageKey = $data['page_key'] ?? '';
+        
+        if (empty($pageKey)) {
+            $this->setFlash('error', 'Geçersiz sayfa.');
+            $this->redirect(url('/admin/pages'));
+            return;
+        }
+
+        // 1. Sayfa Ana Bilgilerini Güncelle (Title, Subtitle)
+        $pageData = [
+            'title_tr' => $data['title_tr'] ?? '',
+            'title_en' => $data['title_en'] ?? '',
+            'subtitle_tr' => $data['subtitle_tr'] ?? '',
+            'subtitle_en' => $data['subtitle_en'] ?? ''
+        ];
+        $this->pageModel->updateByKey($pageKey, $pageData);
+        
+        // 2. Section verilerini güncelle
+        if (isset($data['sections']) && is_array($data['sections'])) {
+            $success = true;
+            foreach ($data['sections'] as $section) {
+                $sectionKey = $section['section_key'] ?? '';
+                if (!empty($sectionKey)) {
+                    $updateData = [
+                        'title_tr' => $section['title_tr'] ?? '',
+                        'title_en' => $section['title_en'] ?? '',
+                        'content_tr' => $section['content_tr'] ?? '',
+                        'content_en' => $section['content_en'] ?? ''
+                    ];
+                    if (!$this->pageModel->updateSection($pageKey, $sectionKey, $updateData)) {
+                        $success = false;
+                        break;
+                    }
+                }
+            }
+            
+            if ($success) {
+                $this->setFlash('success', 'Sayfa bölümleri başarıyla güncellendi.');
+            } else {
+                $this->setFlash('error', 'Sayfa bölümleri güncellenirken bir hata oluştu.');
+            }
+        } else {
+            $this->setFlash('error', 'Güncellenecek bölüm bulunamadı.');
         }
         
         $this->redirect(url('/admin/pages/edit/' . $pageKey));

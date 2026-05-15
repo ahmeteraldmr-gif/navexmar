@@ -6,54 +6,26 @@
  * Ortam algılama ve veritabanı bağlantı ayarları
  */
 
+// Env loader'ı yükle
+require_once __DIR__ . '/env_loader.php';
+
 // Ortam algılama (Local / Production)
 function detectEnvironment() {
-    $isLocal = false;
-    
-    // HTTP_HOST kontrolü
-    if (isset($_SERVER['HTTP_HOST'])) {
-        $host = $_SERVER['HTTP_HOST'];
-        $isLocal = (
-            $host === 'localhost' || 
-            $host === '127.0.0.1' ||
-            strpos($host, 'localhost:') === 0 ||
-            strpos($host, '127.0.0.1:') === 0
-        );
-    }
-    
-    // SERVER_NAME kontrolü (fallback)
-    if (!$isLocal && isset($_SERVER['SERVER_NAME'])) {
-        $serverName = $_SERVER['SERVER_NAME'];
-        $isLocal = ($serverName === 'localhost' || $serverName === '127.0.0.1');
-    }
-    
-    // REMOTE_ADDR kontrolü (fallback)
-    if (!$isLocal && isset($_SERVER['REMOTE_ADDR'])) {
-        $isLocal = in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
-    }
-    
-    return $isLocal ? 'local' : 'production';
+    return env('APP_ENV', 'production');
 }
 
 // Ortam
-define('APP_ENV', detectEnvironment());
+if (!defined('APP_ENV')) {
+    define('APP_ENV', detectEnvironment());
+}
 
 // Veritabanı ayarları
-if (APP_ENV === 'local') {
-    // LOCAL (XAMPP/MAMP) AYARLARI
-    define('DB_HOST', 'localhost');
-    define('DB_PORT', '3306');
-    define('DB_USER', 'root');
-    define('DB_PASS', '');
-    define('DB_NAME', 'navexmar');
-} else {
-    // PRODUCTION (SUNUCU) AYARLARI
-    define('DB_HOST', 'localhost');
-    define('DB_PORT', '3306');
-    define('DB_USER', 'navexmar_admin');
-    define('DB_PASS', 'Abozoglan01.');
-    define('DB_NAME', 'navexmar_navex');
-}
+define('DB_HOST', env('DB_HOST', 'localhost'));
+define('DB_PORT', env('DB_PORT', '3306'));
+define('DB_USER', env('DB_USER', 'root'));
+define('DB_PASS', env('DB_PASSWORD', ''));
+define('DB_NAME', env('DB_DATABASE', 'navexmar'));
+
 
 /**
  * Veritabanı bağlantısını döndürür

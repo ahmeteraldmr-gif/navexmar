@@ -6,8 +6,10 @@
 /* Page Header */
 .page-header {
     position: relative;
-    height: 350px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #2c5f8d 100%);
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,16 +17,7 @@
     overflow: hidden;
 }
 
-.page-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 350"><path d="M0,175 Q300,125 600,175 T1200,175 L1200,350 L0,350 Z" fill="rgba(255,255,255,0.05)"/></svg>');
-    background-size: cover;
-}
+/* .page-header::before kaldırıldı - background image görünsün diye */
 
 .page-header-overlay {
     position: absolute;
@@ -38,6 +31,21 @@
 .page-header .container {
     position: relative;
     z-index: 2;
+}
+
+.page-header h1 {
+    color: var(--white);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    font-weight: 700;
+}
+
+.page-header p {
+    color: var(--white);
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+    line-height: 1.6;
 }
 
 .page-header h1 {

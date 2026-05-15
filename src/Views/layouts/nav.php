@@ -34,8 +34,8 @@
                         <?php if (isset($services) && !empty($services)): ?>
                             <?php foreach(array_slice($services, 0, 5) as $service): ?>
                                 <li>
-                                    <a href="<?php echo url('/hizmet/' . e($service['slug'])); ?>">
-                                        <?php echo e($service['name_' . $lang]); ?>
+                                    <a href="<?php echo url('/hizmet/' . e($service['slug'] ?? '')); ?>">
+                                        <?php echo e($service['name_' . $lang] ?? $service['name'] ?? ''); ?>
                                     </a>
                                 </li>
                             <?php endforeach; ?>

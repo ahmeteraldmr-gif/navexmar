@@ -47,20 +47,11 @@
                 <h4 data-i18n="footer.workingHours">Çalışma Saatleri</h4>
                 <ul>
                     <li data-i18n="footer.workingHoursDesc">
-                        <?php echo e($settings['working_hours'] ?? 'Zaman Kısıtı Olmaksızın 7/24 Operayyon Takibi Ve Her Aşamada Erişilebilir Opersayon Ekibi'); ?>
+                        <?php echo e($settings['working_hours'] ?? 'Zaman Kısıtı Olmaksızın 7/24 Operasyon Takibi ve Her Aşamada Erişilebilir Operasyon Ekibi'); ?>
                     </li>
                 </ul>
             </div>
             
-            <!-- Bülten -->
-            <div class="footer-col">
-                <h4 data-i18n="footer.newsletter">Bülten</h4>
-                <p data-i18n="footer.newsletterDesc">Haberlerden haberdar olun</p>
-                <form class="newsletter-form" id="newsletterForm">
-                    <input type="email" name="email" data-i18n="footer.emailPlaceholder" data-i18n-placeholder="true" placeholder="E-posta adresiniz" required>
-                    <button type="submit" data-i18n="common.send">Gönder</button>
-                </form>
-            </div>
         </div>
         
         <!-- Social Media Links -->

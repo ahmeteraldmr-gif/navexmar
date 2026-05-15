@@ -22,6 +22,10 @@
     <?php if (isset($settings['site_favicon']) && !empty($settings['site_favicon'])): ?>
         <link rel="icon" href="<?php echo asset($settings['site_favicon']); ?>">
     <?php endif; ?>
+    <script>
+        window.BASE_URL = '<?php echo BASE_URL; ?>';
+        window.CURRENT_LANG = '<?php echo $lang; ?>';
+    </script>
 </head>
 <body>
     <?php 

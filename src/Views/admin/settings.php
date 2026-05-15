@@ -186,6 +186,7 @@
         </div>
     </div>
 
+    <script src="<?php echo asset('js/admin.js?v=' . time()); ?>"></script>
     <script>
         // Sidebar toggle
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {

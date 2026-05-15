@@ -32,6 +32,9 @@ class ServiceController extends BaseController {
         $page = $this->pageModel->getByKey('services');
         $headerImage = $this->headerImageModel->getPageHeaderImage('services');
         
+        // Sayfa bölümlerini getir
+        $sections = $this->pageModel->getSections('services');
+        
         // Tüm hizmetleri getir
         $services = $this->serviceModel->getAllOrdered($this->lang);
         
@@ -42,6 +45,7 @@ class ServiceController extends BaseController {
         $this->render('pages/services', [
             'page' => $page,
             'headerImage' => $headerImage,
+            'sections' => $sections,
             'services' => $services,
             'settings' => $settings,
             'lang' => $this->lang

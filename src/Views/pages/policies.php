@@ -3,51 +3,47 @@
 <!-- Policies Content -->
 <section class="policies-content">
     <div class="container">
+        <?php
+        // Helper fonksiyon
+        function getPolicyContent($sections, $key, $lang = 'tr', $field = 'title') {
+            foreach ($sections as $section) {
+                if ($section['section_key'] === $key) {
+                    $fieldName = $field . '_' . $lang;
+                    return $section[$fieldName] ?? '';
+                }
+            }
+            return '';
+        }
+        ?>
+        
         <div class="content-intro">
-            <h2><?php echo $lang === 'tr' ? 'Kurumsal Politikalarımız' : 'Our Corporate Policies'; ?></h2>
-            <p>
-                <?php echo $lang === 'tr' 
-                    ? 'Navexmar olarak, tüm faaliyetlerimizde uluslararası standartlara uygun, etik ve sorumlu bir yaklaşım benimsiyoruz. Politikalarımız, sürdürülebilir başarı için yol haritamızdır.'
-                    : 'As Navexmar, we adopt an ethical and responsible approach in all our activities in accordance with international standards. Our policies are our roadmap for sustainable success.';
-                ?>
-            </p>
+            <h2><?php echo htmlspecialchars(getPolicyContent($sections, 'intro_title', $lang, 'title'), ENT_QUOTES, 'UTF-8'); ?></h2>
+            <p><?php echo htmlspecialchars(getPolicyContent($sections, 'intro_description', $lang, 'content'), ENT_QUOTES, 'UTF-8'); ?></p>
         </div>
 
         <div class="policies-grid">
             <div class="policy-card">
                 <i class="fas fa-star"></i>
-                <h3><?php echo $lang === 'tr' ? 'Kalite Politikası' : 'Quality Policy'; ?></h3>
-                <p><?php echo $lang === 'tr' 
-                    ? 'Müşteri memnuniyetini ön planda tutarak, uluslararası kalite standartlarına uygun, güvenilir ve sürdürülebilir hizmetler sunmayı taahhüt ediyoruz.'
-                    : 'We are committed to providing reliable and sustainable services in accordance with international quality standards, keeping customer satisfaction at the forefront.';
-                ?></p>
+                <h3><?php echo htmlspecialchars(getPolicyContent($sections, 'quality_title', $lang, 'title'), ENT_QUOTES, 'UTF-8'); ?></h3>
+                <p><?php echo htmlspecialchars(getPolicyContent($sections, 'quality_content', $lang, 'content'), ENT_QUOTES, 'UTF-8'); ?></p>
             </div>
 
             <div class="policy-card">
                 <i class="fas fa-shield-alt"></i>
-                <h3><?php echo $lang === 'tr' ? 'İş Sağlığı ve Güvenliği' : 'Occupational Health and Safety'; ?></h3>
-                <p><?php echo $lang === 'tr' 
-                    ? 'Çalışanlarımızın ve iş ortaklarımızın sağlığı ve güvenliği bizim için en önemli önceliktir. Sıfır kaza hedefiyle çalışıyoruz.'
-                    : 'The health and safety of our employees and business partners is our top priority. We work with a zero accident target.';
-                ?></p>
+                <h3><?php echo htmlspecialchars(getPolicyContent($sections, 'safety_title', $lang, 'title'), ENT_QUOTES, 'UTF-8'); ?></h3>
+                <p><?php echo htmlspecialchars(getPolicyContent($sections, 'safety_content', $lang, 'content'), ENT_QUOTES, 'UTF-8'); ?></p>
             </div>
 
             <div class="policy-card">
                 <i class="fas fa-leaf"></i>
-                <h3><?php echo $lang === 'tr' ? 'Çevre Politikası' : 'Environmental Policy'; ?></h3>
-                <p><?php echo $lang === 'tr' 
-                    ? 'Çevreye duyarlı çalışma prensiplerimizle, gelecek nesillere yaşanabilir bir çevre bırakmayı hedefliyoruz.'
-                    : 'With our environmentally sensitive working principles, we aim to leave a livable environment for future generations.';
-                ?></p>
+                <h3><?php echo htmlspecialchars(getPolicyContent($sections, 'environment_title', $lang, 'title'), ENT_QUOTES, 'UTF-8'); ?></h3>
+                <p><?php echo htmlspecialchars(getPolicyContent($sections, 'environment_content', $lang, 'content'), ENT_QUOTES, 'UTF-8'); ?></p>
             </div>
 
             <div class="policy-card">
                 <i class="fas fa-balance-scale"></i>
-                <h3><?php echo $lang === 'tr' ? 'Etik ve Uyum' : 'Ethics and Compliance'; ?></h3>
-                <p><?php echo $lang === 'tr' 
-                    ? 'Tüm iş süreçlerimizde dürüstlük, şeffaflık ve adil rekabet ilkelerine bağlı kalıyoruz.'
-                    : 'We adhere to the principles of honesty, transparency and fair competition in all our business processes.';
-                ?></p>
+                <h3><?php echo htmlspecialchars(getPolicyContent($sections, 'ethics_title', $lang, 'title'), ENT_QUOTES, 'UTF-8'); ?></h3>
+                <p><?php echo htmlspecialchars(getPolicyContent($sections, 'ethics_content', $lang, 'content'), ENT_QUOTES, 'UTF-8'); ?></p>
             </div>
 
             <div class="policy-card">

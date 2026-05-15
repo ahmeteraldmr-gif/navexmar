@@ -43,14 +43,9 @@
                         <label for="service"><?php echo $lang === 'tr' ? 'Hizmet Seçimi' : 'Service Selection'; ?></label>
                         <select id="service" name="service">
                             <option value=""><?php echo $lang === 'tr' ? 'Seçiniz...' : 'Select...'; ?></option>
-                            <option value="docking"><?php echo $lang === 'tr' ? 'Havuzlama Hizmeti' : 'Docking Service'; ?></option>
-                            <option value="workshop"><?php echo $lang === 'tr' ? 'Atölye Hizmetleri' : 'Workshop Services'; ?></option>
-                            <option value="onboard"><?php echo $lang === 'tr' ? 'Gemi Üzeri Hizmetler' : 'Onboard Services'; ?></option>
-                            <option value="supply"><?php echo $lang === 'tr' ? 'Tedarik Hizmetleri' : 'Supply Services'; ?></option>
-                            <option value="engineering"><?php echo $lang === 'tr' ? 'Mühendislik Hizmetleri' : 'Engineering Services'; ?></option>
-                            <option value="bwts">BWTS <?php echo $lang === 'tr' ? 'Kurulumu' : 'Installation'; ?></option>
-                            <option value="scrubber">Scrubber <?php echo $lang === 'tr' ? 'Kurulumu' : 'Installation'; ?></option>
-                            <option value="predictive"><?php echo $lang === 'tr' ? 'Öngörücü Bakım' : 'Predictive Maintenance'; ?></option>
+                            <option value="gemi-uzeri-hizmetler"><?php echo $lang === 'tr' ? 'Gemi Üzeri Hizmetler' : 'Onboard Services'; ?></option>
+                            <option value="tedarik-hizmetleri"><?php echo $lang === 'tr' ? 'Tedarik Hizmetleri' : 'Supply Services'; ?></option>
+                            <option value="ongorucu-bakim"><?php echo $lang === 'tr' ? 'Öngörücü Bakım' : 'Predictive Maintenance'; ?></option>
                             <option value="other"><?php echo $lang === 'tr' ? 'Diğer' : 'Other'; ?></option>
                         </select>
                     </div>

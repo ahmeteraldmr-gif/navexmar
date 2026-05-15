@@ -4,9 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesajlar - Navexmar Admin</title>
-    <link rel="stylesheet" href="<?php echo asset('css/style.css'); ?>">
     <link rel="stylesheet" href="<?php echo asset('css/admin.css'); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #1a4d7d, #2563a8);
+            color: white;
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+    </style>
 </head>
 <body class="admin-body">
     <!-- Sidebar -->
@@ -23,9 +61,6 @@
             </a>
             <a href="<?php echo url('/admin/messages'); ?>" class="nav-item active">
                 <i class="fas fa-envelope"></i> Mesajlar
-                <?php if ($unreadCount > 0): ?>
-                    <span class="badge"><?php echo $unreadCount; ?></span>
-                <?php endif; ?>
             </a>
             <a href="<?php echo url('/admin/pages'); ?>" class="nav-item">
                 <i class="fas fa-file-alt"></i> Sayfalar
@@ -52,11 +87,11 @@
                 <button class="sidebar-toggle" id="sidebarToggle">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1>Mesajlar</h1>
+                <h1><i class="fas fa-envelope"></i> Mesajlar</h1>
             </div>
             <div class="topbar-right">
-                <a href="<?php echo url('/'); ?>" target="_blank" class="btn btn-sm btn-primary">
-                    <i class="fas fa-external-link-alt"></i> Siteyi Görüntüle
+                <a href="<?php echo url('/admin'); ?>" class="btn btn-sm btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Geri
                 </a>
             </div>
         </div>
@@ -70,68 +105,100 @@
                 </div>
             <?php endif; ?>
 
-            <!-- Messages Stats -->
-            <div class="stats-grid" style="margin-bottom: 2rem;">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #2196F3;">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3><?php echo count($messages); ?></h3>
-                        <p>Toplam Mesaj</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #FF9800;">
-                        <i class="fas fa-envelope-open"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3><?php echo $unreadCount; ?></h3>
-                        <p>Okunmamış Mesaj</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Messages List -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fas fa-envelope"></i> Tüm Mesajlar</h2>
+                    <h2><i class="fas fa-inbox"></i> Gelen Mesajlar</h2>
+                    <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
+                        Toplam: <?php echo count($messages); ?> mesaj
+                    </p>
                 </div>
                 <div class="card-body">
                     <?php if (!empty($messages)): ?>
-                        <div class="messages-list">
-                            <?php foreach ($messages as $message): ?>
-                                <div class="message-card <?php echo $message['is_read'] ? 'read' : ''; ?>" data-id="<?php echo $message['id']; ?>">
-                                    <div class="message-header">
-                                        <div class="message-info">
-                                            <h3><?php echo e($message['name']); ?></h3>
-                                            <p><strong>E-posta:</strong> <a href="mailto:<?php echo e($message['email']); ?>"><?php echo e($message['email']); ?></a></p>
-                                            <p><strong>Telefon:</strong> <?php echo e($message['phone'] ?? '-'); ?></p>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                                        <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--primary);">Durum</th>
+                                        <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--primary);">Gönderen</th>
+                                        <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--primary);">Email & Telefon</th>
+                                        <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--primary);">Firma</th>
+                                        <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--primary);">Hizmet</th>
+                                        <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--primary);">Mesaj</th>
+                                        <th style="padding: 1rem; text-align: left; font-weight: 600; color: var(--primary);">Tarih</th>
+                                        <th style="padding: 1rem; text-align: center; font-weight: 600; color: var(--primary);">İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($messages as $message): ?>
+                                    <tr style="border-bottom: 1px solid #dee2e6; <?php echo $message['is_read'] == 0 ? 'background: #fff9e6;' : ''; ?>">
+                                        <td style="padding: 1rem;">
+                                            <?php if ($message['is_read'] == 0): ?>
+                                                <span style="background: #ffc107; color: #333; padding: 0.3rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
+                                                    <i class="fas fa-star"></i> YENİ
+                                                </span>
+                                            <?php else: ?>
+                                                <span style="background: #28a745; color: white; padding: 0.3rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
+                                                    <i class="fas fa-check"></i> Okundu
+                                                </span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td style="padding: 1rem; font-weight: 600; color: var(--primary);">
+                                            <?php echo e($message['name']); ?>
+                                        </td>
+                                        <td style="padding: 1rem;">
+                                            <div style="font-size: 0.9rem; color: #555;">
+                                                <div><i class="fas fa-envelope"></i> <?php echo e($message['email']); ?></div>
+                                                <div style="margin-top: 0.25rem;"><i class="fas fa-phone"></i> <?php echo e($message['phone'] ?? '-'); ?></div>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 1rem;"><?php echo e($message['company'] ?? '-'); ?></td>
+                                        <td style="padding: 1rem;">
                                             <?php if (!empty($message['service'])): ?>
-                                                <p><strong>Hizmet:</strong> <?php echo e($message['service']); ?></p>
+                                                <span style="background: #e7f3ff; color: #0066cc; padding: 0.3rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">
+                                                    <?php echo e($message['service']); ?>
+                                                </span>
+                                            <?php else: ?>
+                                                <span style="color: #999;">-</span>
                                             <?php endif; ?>
-                                            <p class="message-date"><?php echo date('d.m.Y H:i', strtotime($message['created_at'])); ?></p>
-                                        </div>
-                                        <div class="message-actions">
-                                            <?php if (!$message['is_read']): ?>
-                                                <button class="btn btn-sm btn-primary mark-read" data-id="<?php echo $message['id']; ?>">
-                                                    <i class="fas fa-check"></i> Okundu İşaretle
+                                        </td>
+                                        <td style="padding: 1rem; max-width: 300px;">
+                                            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer;" 
+                                                 onclick="this.style.whiteSpace = this.style.whiteSpace === 'nowrap' ? 'normal' : 'nowrap';"
+                                                 title="<?php echo e($message['message']); ?>">
+                                                <?php echo e(strlen($message['message']) > 100 ? substr($message['message'], 0, 100) . '...' : $message['message']); ?>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 1rem; white-space: nowrap; font-size: 0.9rem; color: #666;">
+                                            <?php echo date('d.m.Y', strtotime($message['created_at'])); ?><br>
+                                            <?php echo date('H:i', strtotime($message['created_at'])); ?>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                                                <?php if ($message['is_read'] == 0): ?>
+                                                <button onclick="markAsRead(<?php echo $message['id']; ?>)" 
+                                                        class="btn btn-sm btn-success" 
+                                                        style="padding: 0.5rem 1rem; font-size: 0.85rem;"
+                                                        title="Okundu İşaretle">
+                                                    <i class="fas fa-check"></i>
                                                 </button>
-                                            <?php endif; ?>
-                                            <button class="btn btn-sm btn-danger delete-message" data-id="<?php echo $message['id']; ?>">
-                                                <i class="fas fa-trash"></i> Sil
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="message-body">
-                                        <p><?php echo nl2br(e($message['message'])); ?></p>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
+                                                <?php endif; ?>
+                                                <button onclick="deleteMessage(<?php echo $message['id']; ?>)" 
+                                                        class="btn btn-sm btn-danger" 
+                                                        style="padding: 0.5rem 1rem; font-size: 0.85rem;"
+                                                        title="Sil">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                     <?php else: ?>
-                        <div class="text-center text-muted">
-                            <p>Henüz mesaj bulunmamaktadır.</p>
+                        <div style="text-align: center; padding: 3rem; color: #999;">
+                            <i class="fas fa-inbox" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                            <p style="font-size: 1.2rem; margin: 0;">Henüz mesaj bulunmamaktadır.</p>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -139,49 +206,64 @@
         </div>
     </div>
 
-    <script src="<?php echo asset('js/admin.js'); ?>"></script>
     <script>
         // Sidebar toggle
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {
             document.querySelector('.admin-sidebar').classList.toggle('collapsed');
         });
 
-        // Mark as read
-        document.querySelectorAll('.mark-read').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.dataset.id;
-                fetch(`<?php echo url('/admin/messages/read/'); ?>${id}`, {
-                    method: 'POST'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        this.closest('.message-card').classList.add('read');
-                        this.remove();
-                        location.reload();
-                    }
-                });
+        // Mark message as read
+        function markAsRead(messageId) {
+            if (!confirm('Bu mesajı okundu olarak işaretlemek istediğinize emin misiniz?')) {
+                return;
+            }
+
+            fetch('<?php echo url('/admin/messages/read/'); ?>' + messageId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Hata: ' + (data.message || 'İşlem başarısız oldu.'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Bir hata oluştu.');
             });
-        });
+        }
 
         // Delete message
-        document.querySelectorAll('.delete-message').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (confirm('Bu mesajı silmek istediğinizden emin misiniz?')) {
-                    const id = this.dataset.id;
-                    fetch(`<?php echo url('/admin/messages/delete/'); ?>${id}`, {
-                        method: 'POST'
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            this.closest('.message-card').remove();
-                            location.reload();
-                        }
-                    });
+        function deleteMessage(messageId) {
+            if (!confirm('Bu mesajı silmek istediğinize emin misiniz? Bu işlem geri alınamaz!')) {
+                return;
+            }
+
+            fetch('<?php echo url('/admin/messages/delete/'); ?>' + messageId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Hata: ' + (data.message || 'İşlem başarısız oldu.'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Bir hata oluştu.');
             });
-        });
+        }
     </script>
+    <script src="<?php echo asset('js/admin.js?v=' . time()); ?>"></script>
 </body>
 </html>

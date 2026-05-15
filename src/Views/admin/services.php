@@ -105,7 +105,9 @@
                                             <p><strong>Özellikler:</strong></p>
                                             <ul>
                                                 <?php 
-                                                $features = json_decode($service['features'], true);
+                                                $features = is_string($service['features']) 
+                                                    ? json_decode($service['features'], true) 
+                                                    : $service['features'];
                                                 if (is_array($features)):
                                                     foreach (array_slice($features, 0, 3) as $feature):
                                                 ?>
@@ -194,14 +196,27 @@
         </div>
     </div>
 
-    <script src="<?php echo asset('js/admin.js'); ?>"></script>
+    <script src="<?php echo asset('js/admin.js?v=' . time()); ?>"></script>
     <script>
+        // Define BASE_URL for admin.js
+        window.PHP_BASE_URL = '<?php echo BASE_URL; ?>';
+        
         // Sidebar toggle
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {
             document.querySelector('.admin-sidebar').classList.toggle('collapsed');
         });
 
         // Services management script burada yüklenecek (admin.js içinde)
+        
+        // Debug: Check if admin.js loaded
+        window.addEventListener('load', function() {
+            console.log('Page loaded, checking BASE_URL...');
+            if (typeof BASE_URL !== 'undefined') {
+                console.log('✅ BASE_URL is defined:', BASE_URL);
+            } else {
+                console.error('❌ BASE_URL is NOT defined! admin.js may not have loaded.');
+            }
+        });
     </script>
 </body>
 </html>
