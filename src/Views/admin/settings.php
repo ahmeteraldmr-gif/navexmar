@@ -188,11 +188,6 @@
 
     <script src="<?php echo asset('js/admin.js?v=' . time()); ?>"></script>
     <script>
-        // Sidebar toggle
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.querySelector('.admin-sidebar').classList.toggle('collapsed');
-        });
-
         // Logo upload
         document.getElementById('uploadLogoBtn')?.addEventListener('click', function() {
             const fileInput = document.getElementById('logoUpload');

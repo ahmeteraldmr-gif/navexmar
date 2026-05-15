@@ -15,6 +15,35 @@ const getBaseUrl = () => {
 const BASE_URL = typeof window.PHP_BASE_URL !== 'undefined' ? window.PHP_BASE_URL : getBaseUrl();
 
 // ==========================================
+// SIDEBAR TOGGLE LOGIC
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.querySelector('.admin-sidebar');
+    
+    if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+            }
+        });
+
+        // Close sidebar on mobile when clicking outside
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024 && 
+                sidebar.classList.contains('active') && 
+                !sidebar.contains(e.target) && 
+                !sidebarToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+    }
+});
+
+// ==========================================
 // UTILITY FUNCTIONS
 // ==========================================
 

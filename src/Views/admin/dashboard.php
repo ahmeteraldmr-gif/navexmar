@@ -185,11 +185,6 @@
     </div>
 
     <script>
-        // Sidebar toggle
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.querySelector('.admin-sidebar').classList.toggle('collapsed');
-        });
-
         // Action cards hover effect
         document.querySelectorAll('.action-card').forEach(card => {
             card.addEventListener('mouseenter', function() {

@@ -205,11 +205,6 @@
     </div>
 
     <script>
-        // Sidebar toggle
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.querySelector('.admin-sidebar').classList.toggle('collapsed');
-        });
-
         // Page cards hover effect
         document.querySelectorAll('.page-card').forEach(card => {
             const btn = card.querySelector('.btn');

@@ -207,11 +207,6 @@
     </div>
 
     <script>
-        // Sidebar toggle
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.querySelector('.admin-sidebar').classList.toggle('collapsed');
-        });
-
         // Mark message as read
         function markAsRead(messageId) {
             if (!confirm('Bu mesajı okundu olarak işaretlemek istediğinize emin misiniz?')) {

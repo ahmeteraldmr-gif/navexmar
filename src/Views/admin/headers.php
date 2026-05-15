@@ -241,11 +241,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Admin Headers JS Loaded');
 
-            // Sidebar toggle
-            document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-                document.querySelector('.admin-sidebar').classList.toggle('collapsed');
-            });
-
             // Upload area click
             document.addEventListener('click', function(e) {
                 if (e.target.closest('#uploadArea')) {

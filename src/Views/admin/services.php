@@ -200,23 +200,6 @@
     <script>
         // Define BASE_URL for admin.js
         window.PHP_BASE_URL = '<?php echo BASE_URL; ?>';
-        
-        // Sidebar toggle
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.querySelector('.admin-sidebar').classList.toggle('collapsed');
-        });
-
-        // Services management script burada yüklenecek (admin.js içinde)
-        
-        // Debug: Check if admin.js loaded
-        window.addEventListener('load', function() {
-            console.log('Page loaded, checking BASE_URL...');
-            if (typeof BASE_URL !== 'undefined') {
-                console.log('✅ BASE_URL is defined:', BASE_URL);
-            } else {
-                console.error('❌ BASE_URL is NOT defined! admin.js may not have loaded.');
-            }
-        });
     </script>
 </body>
 </html>

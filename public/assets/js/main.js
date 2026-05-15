@@ -45,11 +45,30 @@ dropdowns.forEach(dropdown => {
 });
 
 // Dropdown dışına tıklanınca kapat
-document.addEventListener('click', () => {
-    dropdowns.forEach(dropdown => {
-        dropdown.classList.remove('active');
-    });
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.dropdown')) {
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+    }
 });
+
+// ==========================================
+// LANGUAGE SELECTOR (Mobile)
+// ==========================================
+const langSelector = document.querySelector('.language-selector');
+if (langSelector) {
+    const langToggle = langSelector.querySelector('.lang-toggle');
+    if (langToggle) {
+        langToggle.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) {
+                e.preventDefault();
+                e.stopPropagation();
+                langSelector.classList.toggle('active');
+            }
+        });
+    }
+}
 
 // ==========================================
 // STATS COUNTER ANIMATION

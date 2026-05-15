@@ -545,9 +545,10 @@ body.admin-body {
 /* ==========================================
    RESPONSIVE
    ========================================== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .admin-sidebar {
         transform: translateX(-100%);
+        width: var(--sidebar-width);
     }
     
     .admin-sidebar.active {
@@ -556,6 +557,28 @@ body.admin-body {
     
     .admin-main {
         margin-left: 0;
+        width: 100%;
+    }
+
+    .topbar-left h1 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Sidebar Collapsed State (Desktop) */
+@media (min-width: 1025px) {
+    .admin-sidebar.collapsed {
+        transform: translateX(-100%);
+    }
+    
+    .admin-sidebar.collapsed + .admin-main {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-content {
+        padding: 1rem;
     }
     
     .services-grid {
@@ -565,5 +588,24 @@ body.admin-body {
     .modal-content {
         width: 95%;
         max-height: 95vh;
+    }
+
+    .card-header {
+        padding: 1rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .topbar-right {
+        display: none;
+    }
+    
+    .btn-sm {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
     }
 }

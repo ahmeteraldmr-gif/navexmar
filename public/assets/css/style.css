@@ -640,6 +640,34 @@ body {
     .floki-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    /* Mobile Language Selector Adjustments */
+    .language-selector {
+        width: 100%;
+    }
+
+    .language-menu {
+        position: static;
+        width: 100%;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        box-shadow: none;
+        display: none;
+        background: var(--light-color);
+        margin-top: 0.5rem;
+        border-radius: 4px;
+    }
+
+    .language-selector.active .language-menu {
+        display: block;
+    }
+
+    .lang-toggle {
+        padding: 0.8rem 0;
+        justify-content: space-between;
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
