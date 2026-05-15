@@ -1,242 +1,126 @@
 <?php
-/**
- * Uygulama Yapılandırma Dosyası
- * Application Configuration File
- * 
- * Uygulama genelinde kullanılan ayarlar ve sabitler
- */
 
-// Session başlat
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+return [
 
-// Ortam bilgisini config/database.php'den al
-require_once __DIR__ . '/database.php';
+    /*
+    |--------------------------------------------------------------------------
+    | Application Name
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application, which will be used when the
+    | framework needs to place the application's name in a notification or
+    | other UI elements where an application name needs to be displayed.
+    |
+    */
 
-// Uygulama dizini
-define('ROOT_PATH', dirname(__DIR__));
-define('PUBLIC_PATH', ROOT_PATH . '/public');
-define('SRC_PATH', ROOT_PATH . '/src');
-define('CONFIG_PATH', ROOT_PATH . '/config');
-define('VIEWS_PATH', SRC_PATH . '/Views');
-define('UPLOADS_PATH', PUBLIC_PATH . '/uploads');
+    'name' => env('APP_NAME', 'Laravel'),
 
-// URL ayarları
-function getBaseUrl() {
-    $appUrl = env('APP_URL', 'http://localhost:8000');
-    
-    // Eğer localhost ise veya HTTP_HOST varsa, mevcut URL'yi kullan
-    if (isset($_SERVER['HTTP_HOST'])) {
-        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
-        $host = $_SERVER['HTTP_HOST'];
-        
-        // SCRIPT_NAME üzerinden alt dizin kontrolü
-        $scriptName = $_SERVER['SCRIPT_NAME'];
-        $baseDir = str_replace('/index.php', '', $scriptName);
-        
-        return $protocol . '://' . $host . $baseDir;
-    }
-    
-    return rtrim($appUrl, '/');
-}
+    /*
+    |--------------------------------------------------------------------------
+    | Application Environment
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the "environment" your application is currently
+    | running in. This may determine how you prefer to configure various
+    | services the application utilizes. Set this in your ".env" file.
+    |
+    */
 
-define('BASE_URL', getBaseUrl());
-define('ASSETS_URL', BASE_URL . '/assets');
-define('UPLOADS_URL', BASE_URL . '/uploads');
+    'env' => env('APP_ENV', 'production'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Application Debug Mode
+    |--------------------------------------------------------------------------
+    |
+    | When your application is in debug mode, detailed error messages with
+    | stack traces will be shown on every error that occurs within your
+    | application. If disabled, a simple generic error page is shown.
+    |
+    */
 
-// Dil ayarları
-define('DEFAULT_LANG', 'tr');
-define('AVAILABLE_LANGS', ['tr', 'en']);
+    'debug' => (bool) env('APP_DEBUG', false),
 
-// Sayfa başına öğe sayıları
-define('ITEMS_PER_PAGE', 10);
+    /*
+    |--------------------------------------------------------------------------
+    | Application URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used by the console to properly generate URLs when using
+    | the Artisan command line tool. You should set this to the root of
+    | the application so that it's available within Artisan commands.
+    |
+    */
 
-// Dosya yükleme ayarları
-define('MAX_FILE_SIZE', 10 * 1024 * 1024); // 10 MB
-define('ALLOWED_IMAGE_TYPES', ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']);
-define('ALLOWED_IMAGE_EXTENSIONS', ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+    'url' => env('APP_URL', 'http://localhost'),
 
-// Hata raporlama
-if (APP_ENV === 'local') {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-} else {
-    error_reporting(0);
-    ini_set('display_errors', 0);
-    ini_set('log_errors', 1);
-    ini_set('error_log', ROOT_PATH . '/logs/error.log');
-}
+    /*
+    |--------------------------------------------------------------------------
+    | Application Timezone
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the default timezone for your application, which
+    | will be used by the PHP date and date-time functions. The timezone
+    | is set to "UTC" by default as it is suitable for most use cases.
+    |
+    */
 
-// Timezone ayarı
-date_default_timezone_set('Europe/Istanbul');
+    'timezone' => 'UTC',
 
-/**
- * Aktif dili döndürür
- * 
- * @return string Dil kodu (tr, en)
- */
-function getCurrentLang() {
-    if (isset($_SESSION['lang']) && in_array($_SESSION['lang'], AVAILABLE_LANGS)) {
-        return $_SESSION['lang'];
-    }
-    return DEFAULT_LANG;
-}
+    /*
+    |--------------------------------------------------------------------------
+    | Application Locale Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application locale determines the default locale that will be used
+    | by Laravel's translation / localization methods. This option can be
+    | set to any locale for which you plan to have translation strings.
+    |
+    */
 
-/**
- * Dili değiştirir
- * 
- * @param string $lang Dil kodu
- * @return bool Başarılı ise true
- */
-function setLang($lang) {
-    if (in_array($lang, AVAILABLE_LANGS)) {
-        $_SESSION['lang'] = $lang;
-        return true;
-    }
-    return false;
-}
+    'locale' => env('APP_LOCALE', 'en'),
 
-/**
- * Admin oturum kontrolü
- * 
- * @return bool Admin giriş yapmışsa true
- */
-function isLoggedIn() {
-    return isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true;
-}
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
-/**
- * Admin oturum kontrolü - yönlendirmeli
- * 
- * @param string $redirectUrl Yönlendirme URL'si
- */
-function requireAuth($redirectUrl = '/admin/login') {
-    if (!isLoggedIn()) {
-        header('Location: ' . BASE_URL . $redirectUrl);
-        exit;
-    }
-}
+    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
-/**
- * Çıkış yap
- */
-function logout() {
-    $_SESSION = array();
-    if (isset($_COOKIE[session_name()])) {
-        setcookie(session_name(), '', time() - 3600, '/');
-    }
-    session_destroy();
-}
+    /*
+    |--------------------------------------------------------------------------
+    | Encryption Key
+    |--------------------------------------------------------------------------
+    |
+    | This key is utilized by Laravel's encryption services and should be set
+    | to a random, 32 character string to ensure that all encrypted values
+    | are secure. You should do this prior to deploying the application.
+    |
+    */
 
-/**
- * XSS koruması için HTML encode
- * 
- * @param string $string Temizlenecek metin
- * @return string Temizlenmiş metin
- */
-function e($string) {
-    return htmlspecialchars($string ?? '', ENT_QUOTES, 'UTF-8');
-}
+    'cipher' => 'AES-256-CBC',
 
-/**
- * URL oluştur
- * 
- * @param string $path URL yolu
- * @return string Tam URL
- */
-function url($path = '') {
-    $path = ltrim($path, '/');
-    return BASE_URL . '/' . $path;
-}
+    'key' => env('APP_KEY'),
 
-/**
- * Asset URL oluştur
- * 
- * @param string $path Asset yolu
- * @return string Tam asset URL
- */
-function asset($path = '') {
-    $path = ltrim($path, '/');
-    return ASSETS_URL . '/' . $path;
-}
+    'previous_keys' => [
+        ...array_filter(
+            explode(',', (string) env('APP_PREVIOUS_KEYS', ''))
+        ),
+    ],
 
-/**
- * Upload URL oluştur
- * 
- * @param string $path Upload yolu
- * @return string Tam upload URL
- */
-function upload($path = '') {
-    $path = ltrim($path, '/');
-    return UPLOADS_URL . '/' . $path;
-}
+    /*
+    |--------------------------------------------------------------------------
+    | Maintenance Mode Driver
+    |--------------------------------------------------------------------------
+    |
+    | These configuration options determine the driver used to determine and
+    | manage Laravel's "maintenance mode" status. The "cache" driver will
+    | allow maintenance mode to be controlled across multiple machines.
+    |
+    | Supported drivers: "file", "cache"
+    |
+    */
 
-/**
- * Yönlendirme
- * 
- * @param string $url Yönlendirilecek URL
- */
-function redirect($url) {
-    header('Location: ' . $url);
-    exit;
-}
+    'maintenance' => [
+        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
+        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    ],
 
-/**
- * JSON yanıt döndür
- * 
- * @param mixed $data Yanıt verisi
- * @param int $statusCode HTTP durum kodu
- */
-function jsonResponse($data, $statusCode = 200) {
-    http_response_code($statusCode);
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    exit;
-}
-
-/**
- * Slug oluştur (SEO dostu URL)
- * 
- * @param string $text Metin
- * @return string Slug
- */
-function createSlug($text) {
-    $text = trim($text);
-    $text = mb_strtolower($text, 'UTF-8');
-    
-    // Türkçe karakterleri değiştir
-    $turkish = ['ş', 'Ş', 'ı', 'İ', 'ğ', 'Ğ', 'ü', 'Ü', 'ö', 'Ö', 'ç', 'Ç'];
-    $english = ['s', 's', 'i', 'i', 'g', 'g', 'u', 'u', 'o', 'o', 'c', 'c'];
-    $text = str_replace($turkish, $english, $text);
-    
-    // Özel karakterleri temizle
-    $text = preg_replace('/[^a-z0-9\s-]/', '', $text);
-    $text = preg_replace('/[\s-]+/', '-', $text);
-    $text = trim($text, '-');
-    
-    return $text;
-}
-
-/**
- * CSRF Token oluştur
- * 
- * @return string CSRF token
- */
-function generateCSRFToken() {
-    if (!isset($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    }
-    return $_SESSION['csrf_token'];
-}
-
-/**
- * CSRF Token doğrula
- * 
- * @param string $token Doğrulanacak token
- * @return bool Geçerli ise true
- */
-function validateCSRFToken($token) {
-    return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
-}
+];

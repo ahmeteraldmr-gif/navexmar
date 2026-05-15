@@ -1,239 +1,59 @@
-# Navexmar - Gemi Bakım ve Lojistik Hizmetleri Web Sitesi
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-Navexmar firması için hazırlanmış modern, responsive ve profesyonel bir web sitesidir. Sadece HTML, CSS ve JavaScript kullanılarak geliştirilmiştir.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## 📁 Proje Yapısı
+## About Laravel
 
-```
-navexmar/
-│
-├── index.html              # Ana sayfa
-├── services.html           # Hizmetler sayfası
-├── contact.html            # İletişim sayfası
-├── approach.html           # Yaklaşımımız sayfası
-├── references.html         # Referanslar sayfası
-├── documents.html          # Belgeler sayfası
-├── policies.html           # Politikalar sayfası
-│
-├── css/
-│   ├── style.css          # Ana stil dosyası
-│   └── pages.css          # Sayfalara özel stiller
-│
-├── js/
-│   ├── main.js            # Ana JavaScript dosyası
-│   └── contact.js         # İletişim formu için JavaScript
-│
-└── README.md              # Proje dokümantasyonu
-```
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## 🚀 Özellikler
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-### Genel Özellikler
-- ✅ %100 Responsive tasarım (Mobil, Tablet, Desktop)
-- ✅ Modern ve profesyonel görünüm
-- ✅ Hızlı ve hafif (Framework kullanılmadan)
-- ✅ Cross-browser uyumlu
-- ✅ SEO optimize edilmiş
-- ✅ Font Awesome icon kütüphanesi entegrasyonu
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-### Sayfalar
+## Learning Laravel
 
-#### 1. Ana Sayfa (index.html)
-- Hero bölümü ile etkileyici giriş
-- İstatistik göstergeleri (animasyonlu sayaç)
-- NAVEXMAR marka değerleri
-- Hizmetler özeti
-- Newsletter kayıt formu
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
 
-#### 2. Hizmetler (services.html)
-- 8 farklı hizmet kategorisi:
-  - Havuzlama Hizmeti
-  - Atölye Hizmetleri
-  - Gemi Üzeri Hizmetler
-  - Tedarik Hizmetleri
-  - Mühendislik Hizmetleri
-  - BWTS Kurulumu
-  - Scrubber Kurulumu
-  - Öngörücü Bakım
-- Her hizmet için detaylı açıklama ve özellikler listesi
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-#### 3. İletişim (contact.html)
-- Detaylı iletişim formu
-- Form validasyonu (gerçek zamanlı)
-- İletişim bilgileri
-- Çalışma saatleri
-- Sosyal medya bağlantıları
-- Harita placeholder'ı
+## Laravel Sponsors
 
-#### 4. Yaklaşımımız (approach.html)
-- Şirket felsefesi ve değerleri
-- 9 farklı yaklaşım kartı
-- Misyon ve vizyon bölümü
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-#### 5. Referanslar (references.html)
-- Müşteri listesi
-- Müşteri görüşleri (testimonials)
-- Başarı hikayeleri
+### Premium Partners
 
-#### 6. Belgeler (documents.html)
-- Sertifikalar
-- ISO belgeleri
-- Klas onayları
-- Kurumsal dokümantasyon
+- **[Vehikl](https://vehikl.com)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Redberry](https://redberry.international/laravel-development)**
+- **[Active Logic](https://activelogic.com)**
 
-#### 7. Politikalar (policies.html)
-- Kalite politikası
-- İş sağlığı ve güvenliği
-- Çevre politikası
-- Etik ve uyum politikası
-- KVKK ve bilgi güvenliği
+## Contributing
 
-### JavaScript Özellikleri
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-#### main.js
-- **Responsive Navigation**: Mobil hamburger menü
-- **Dropdown Menüler**: Hizmetler dropdown menüsü
-- **Smooth Scroll**: Yumuşak sayfa kaydırma
-- **Counter Animasyonu**: İstatistiklerde sayı artışı animasyonu
-- **Scroll to Top Button**: Yukarı çık butonu
-- **Navbar Scroll Effect**: Kaydırma ile navbar gölge efekti
-- **Newsletter Form**: Newsletter kayıt işlemi
-- **Fade In Animations**: Scroll ile görünür olan animasyonlar
+## Code of Conduct
 
-#### contact.js
-- **Form Validasyonu**: Gerçek zamanlı form doğrulama
-- **E-posta ve Telefon Kontrolü**: Formatların kontrolü
-- **Bildirim Sistemi**: Başarı/hata bildirimleri
-- **Karakter Sayacı**: Mesaj alanı için karakter limiti
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-### CSS Özellikleri
+## Security Vulnerabilities
 
-#### style.css
-- Modern CSS3 özellikleri
-- Flexbox ve Grid Layout
-- Animasyonlar ve geçişler
-- Responsive media queries
-- Custom CSS variables (renkler için)
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-#### pages.css
-- Sayfalara özel stiller
-- Servis detay kartları
-- İletişim formu stilleri
-- Referans ve belge kartları
-- Politika sayfası stilleri
+## License
 
-## 🎨 Renk Paleti
-
-```css
---primary-color: #1a4d7d    /* Lacivert */
---secondary-color: #ff6b35   /* Turuncu */
---dark-color: #2c3e50        /* Koyu gri */
---light-color: #ecf0f1       /* Açık gri */
---white: #ffffff             /* Beyaz */
---text-color: #333           /* Metin rengi */
-```
-
-## 📱 Responsive Breakpoints
-
-- **Desktop**: 1200px ve üzeri
-- **Tablet**: 768px - 1199px
-- **Mobile**: 767px ve altı
-
-## 🔧 Kurulum ve Kullanım
-
-1. **Dosyaları İndirin**
-   ```
-   Tüm dosyaları bir klasöre kopyalayın
-   ```
-
-2. **Tarayıcıda Açın**
-   ```
-   index.html dosyasını herhangi bir modern tarayıcıda açın
-   ```
-
-3. **Web Sunucusunda Yayınlama**
-   ```
-   Tüm dosyaları web sunucunuzun root dizinine yükleyin
-   ```
-
-## 🌐 Tarayıcı Desteği
-
-- ✅ Chrome (son 2 versiyon)
-- ✅ Firefox (son 2 versiyon)
-- ✅ Safari (son 2 versiyon)
-- ✅ Edge (son 2 versiyon)
-- ✅ Opera (son 2 versiyon)
-
-## 📝 Özelleştirme
-
-### Renkleri Değiştirme
-`css/style.css` dosyasındaki `:root` bölümünden renkleri özelleştirebilirsiniz:
-
-```css
-:root {
-    --primary-color: #1a4d7d;
-    --secondary-color: #ff6b35;
-    /* Diğer renkler... */
-}
-```
-
-### İçerik Güncelleme
-Her HTML dosyasındaki içeriği doğrudan düzenleyebilirsiniz. Tüm metinler Türkçe olarak hazırlanmıştır.
-
-### İletişim Bilgileri
-`contact.html` ve footer bölümlerindeki iletişim bilgilerini güncelleyin:
-- E-posta adresleri
-- Telefon numaraları
-- Adres bilgileri
-- Sosyal medya linkleri
-
-## 🎯 Gelecek Geliştirmeler (Opsiyonel)
-
-- [ ] Google Maps entegrasyonu
-- [ ] Gerçek backend entegrasyonu (form gönderimi)
-- [ ] Çoklu dil desteği
-- [ ] Blog bölümü
-- [ ] Galeri sayfası
-- [ ] Online teklif alma sistemi
-
-## 📞 Destek
-
-Herhangi bir sorunuz veya öneriniz için:
-- E-posta: info@navexmar.com
-- Web: www.navexmar.com (güncellenecek)
-
-## 📄 Lisans
-
-Bu proje Navexmar firması için özel olarak geliştirilmiştir.
-Tüm hakları saklıdır © 2025 Navexmar
-
----
-
-**Not**: Bu site Floki Marine web sitesinden ilham alınarak, Navexmar firması için özelleştirilmiş olarak hazırlanmıştır.
-
-## 🛠️ Teknik Detaylar
-
-- **HTML5**: Semantik HTML yapısı
-- **CSS3**: Modern stil özellikleri
-- **JavaScript (ES6+)**: Vanilla JavaScript (framework yok)
-- **Font Awesome 6.0**: Icon kütüphanesi
-- **Google Fonts**: Segoe UI font ailesi (sistem fontu)
-
-## 📋 Kullanım Kılavuzu
-
-### Yeni Sayfa Eklemek
-1. Mevcut bir HTML dosyasını kopyalayın
-2. İçeriği düzenleyin
-3. Navigation menüsüne yeni sayfayı ekleyin
-4. Footer'daki linkleri güncelleyin
-
-### Yeni Hizmet Eklemek
-`services.html` dosyasında `.service-detail-item` class'ına sahip bir bölüm kopyalayın ve içeriği düzenleyin.
-
-### Form İşleme
-`js/contact.js` dosyasındaki form submission kısmına backend API endpoint'inizi ekleyin.
-
----
-
-**Geliştirici Notu**: Site tamamen responsive olarak tasarlanmıştır ve modern tarayıcılarda sorunsuz çalışmaktadır. Herhangi bir framework kullanılmadığı için hızlı ve hafiftir.
-
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
