@@ -37,4 +37,15 @@ class HomeController extends Controller
 
         return view('pages.approach', compact('page', 'sections', 'settings', 'services'));
     }
+
+    public function policies()
+    {
+        $lang = app()->getLocale();
+        $page = Page::where('page_key', 'policies')->first();
+        $sections = Section::where('page_key', 'policies')->get();
+        $settings = Setting::all()->pluck('setting_value', 'setting_key')->toArray();
+        $services = Service::orderBy('display_order')->get();
+
+        return view('pages.policies', compact('page', 'sections', 'settings', 'services'));
+    }
 }
